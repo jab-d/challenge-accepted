@@ -5,6 +5,7 @@ Activity challenges for active lifestyles
 
 ## Scaffold
 
+````
 ├── config
 │   └── connection.json
 │
@@ -46,3 +47,4 @@ Activity challenges for active lifestyles
 ├── node_modules
 ├── package.json
 ├── server.js
+````
