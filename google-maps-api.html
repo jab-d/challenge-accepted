@@ -1,51 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #map {
-        height: 400px; 
-        width: 400px;  
-       }
-    </style>
-  </head>
-  <body>
-    <!--The div element for the map -->
-    <div id="map"></div>
-    
-    <script>
-// Initialize and add the map
-function initMap() {
-  // The location of Uluru
-  var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
-    </script>
-    <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA16l5HP5G1MyIsuiQ0BEl_xaQHcPYrRIY&callback=initMap"
-    async defer></script>
-  </body>
-</html>
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Geolocation</title>
+    <title>Place ID Finder</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 400px; 
-        width: 400px; 
+        height: 400px;
+        width: 400px;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -53,54 +17,113 @@ function initMap() {
         margin: 0;
         padding: 0;
       }
+      .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 29px;
+        margin-left: 17px;
+        margin-top: 10px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      .controls:focus {
+        border-color: #4d90fe;
+      }
+      .title {
+        font-weight: bold;
+      }
+      #infowindow-content {
+        display: none;
+      }
+      #map #infowindow-content {
+        display: inline;
+      }
+
     </style>
   </head>
   <body>
+    <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
     <div id="map"></div>
+    <div id="infowindow-content">
+      <span id="place-name"  class="title"></span><br>
+      Place ID <span id="place-id"></span><br>
+      <span id="place-address"></span>
+    </div>
+
     <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-      var map, infoWindow;
+      // This sample uses the Place Autocomplete widget to allow the user to search
+      // for and select a place. The sample then displays an info window containing
+      // the place ID and other information about the place that the user has
+      // selected.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 6
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
         });
-        infoWindow = new google.maps.InfoWindow;
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+        var input = document.getElementById('pac-input');
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        var marker = new google.maps.Marker({
+          map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+
+          // Set the position of the marker using the place ID and location.
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location
           });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
+          marker.setVisible(true);
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+          infowindowContent.children['place-name'].textContent = place.name;
+          infowindowContent.children['place-id'].textContent = place.place_id;
+          infowindowContent.children['place-address'].textContent =
+              place.formatted_address;
+          infowindow.open(map, marker);
+        });
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA16l5HP5G1MyIsuiQ0BEl_xaQHcPYrRIY&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA16l5HP5G1MyIsuiQ0BEl_xaQHcPYrRIY&libraries=places&callback=initMap">
     </script>
   </body>
 </html>
