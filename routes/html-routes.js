@@ -1,6 +1,3 @@
-// *********************************************************************************
-// html-routes.js - this file offers a set of routes for sending users to the various html pages
-// *********************************************************************************
 
 // Dependencies
 // =============================================================
@@ -8,28 +5,39 @@ var path = require("path");
 
 // Routes
 // =============================================================
-module.exports = function(app) {
+module.exports = function (app) {
 
-  // Each of the below routes just handles the HTML page that the user gets sent to.
+    // Each of the below routes just handles the HTML page that the user gets sent to.
 
-  // index route loads view.html
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/challenges.html"));
-  });
+    // index route loads view.html
+    app.get("/", function (req, res) {
+        // res.sendFile(path.join(__dirname, "../public/views/index.html"));      
+        res.redirect('/create-user')
+    });
 
-  // cms route loads cms.html
-  app.get("/createChallenge", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/create-challenge.html"));
-  });
+    // Create_user.html Route
+    app.get("/create-user", function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/views/create_user_profile.html"));
+    });
+    // Create_challenge.html Route
+    app.get("/create-challenge", function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/views/create_challenge.html"));
+    });
 
-  // blog route loads blog.html
-  app.get("/challenges", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/challenges.html"));
-  });
+    // User_profile.html Route
+    app.get("/user-profile", function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/views/user_profile.html"));
+    });
 
-  // authors route loads author-manager.html
-  app.get("/users", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/user-manager.html"));
-  });
+    // challenge.html Route
+    app.get("/challenges", function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/views/challenge.html"));
+    });
+
+    // User_profile.html Route
+    app.get("/complete-challenge", function (req, res) {
+        res.sendFile(path.join(__dirname, "../public/views/complete_challenge.html"));
+    });
+
 
 };

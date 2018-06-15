@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [1, 100]
       }
+    
+    },
+    bio: {
+      type: DataTypes.STRING
     },
     points_earned: {
       type: DataTypes.INTEGER

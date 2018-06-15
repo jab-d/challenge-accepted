@@ -29,9 +29,9 @@ module.exports = function(sequelize, DataTypes) {
         min: 1
       }
     },
-    // image: {
-    //   type: DataTypes.STRING
-    // }
+    image: {
+      type: DataTypes.STRING
+    }
 });
 
   Challenge.associate = function(models) {
