@@ -1,0 +1,24 @@
+<a class="button is-primary is-rounded" id="fab">New Challenge</a>
+<div class="container">
+  <div class="columns">
+    {{#each challenge}}
+      <div class="column">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img src="{{challengeImg}}"/>
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4 challenge-title">{{challengeTitle}}</p>
+                <p class="title is-4 challenge-points">{{challengePoints}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>
