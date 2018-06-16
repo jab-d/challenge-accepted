@@ -57,14 +57,17 @@ $(document).ready(function () {
         var challengeRow = $("<div>")
         challengeRow.addClass("row")
         var challengeCard = $("<div>");
-        challengeCard.addClass("col s12 m6");
+        challengeCard.addClass("col s12 m7");
         var challengeCardHeading = $("<div>");
-        challengeCardHeading.addClass("card blue-grey darken-1");
-        var cardContent = $("<div>");
-        cardContent.addClass("card-content white-text")
+        challengeCardHeading.addClass("card");
+        var cardImageContainer = $("<div>");
+        cardImageContainer.addClass("card-image");
+        var cardImage = ("<img class='responsive-img' src='" + challenge.image + "'>")
         var challengeTitle = $("<span>");
         challengeTitle.addClass("card-title")
         challengeTitle.text(challenge.challenge_name + " ");
+        var cardContent = $("<div>");
+        cardContent.addClass("card-content")
         var challengeAuthor = $("<p>");
         challengeAuthor.text("Written by: " + challenge.User.name);
         challengeAuthor.css({"margin-top": "-8px"});
@@ -87,8 +90,10 @@ $(document).ready(function () {
         // APPENDS
         challengeRow.append(challengeCard);
         challengeCard.append(challengeCardHeading);
+        challengeCardHeading.append(cardImageContainer)
         challengeCardHeading.append(cardContent);
-        cardContent.append(challengeTitle);
+        cardImageContainer.append(cardImage);
+        cardImageContainer.append(challengeTitle);
         cardContent.append(challengeAuthor);
         cardContent.append(challengeLocation);
         cardContent.append(challengeBody);
