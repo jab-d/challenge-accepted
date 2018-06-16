@@ -2,10 +2,12 @@ $(document).ready(function () {
 
   // GLOBAL VARIABLES
   var userId;
-  var imageUrl;  
+  var imageUrl;
   var challengeId;
   var updating = false;
   var url = window.location.search;
+
+
 
   // Cloudinary 
   var fileUpload = $("#file-upload")
@@ -18,7 +20,9 @@ $(document).ready(function () {
   var challengeForm = $("#challengeForm");
   var descriptionInput = $("#description");
   var challengeNameInput = $("#challengeName");
+  var autocomplete;
 
+  // Events that trigger functions
   $(fileUpload).change(handleImageUpload);
   $(challengeForm).on("submit", handleFormSubmit);
 
@@ -59,10 +63,10 @@ $(document).ready(function () {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       data: formData
-    }).then(function(res){
-     imageUrl = res.data.secure_url
-     console.log(imageUrl);
-    }).catch(function(err){
+    }).then(function (res) {
+      imageUrl = res.data.secure_url
+      console.log(imageUrl);
+    }).catch(function (err) {
       console.error(err);
     })
   };
@@ -87,7 +91,7 @@ $(document).ready(function () {
       image: imageUrl,
       UserId: userId
     };
-    console.log(newChallenge)
+    console.log("New Challenge: " + newChallenge)
 
     if (!updating) {
       submitChallenge(newChallenge);
@@ -98,11 +102,21 @@ $(document).ready(function () {
   //=====================================================================================//
 
   function submitChallenge(challenge) {
-    $.post("/api/challenges", challenge, function () {
-      // window.location.href = "/api/challenges";
+    $.post("/challenges", challenge, function () {
+      // window.location.href = "/challenges";
     });
+    // console.log("Response: " + challenge);
   }
 
+
+  function initializeAutoComplete() {
+    console.log("Initatiated")
+      autocomplete = new google.maps.places.Autocomplete((document.getElementById('location')),
+          { types: ['geocode'] });
+      google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      });
+  }
+  initializeAutoComplete();
   checkForUser();
 });
 
