@@ -2,22 +2,30 @@ $(document).ready(function () {
 
   // GLOBAL VARIABLES
   var userId;
-  var challengeId;  
-  var updating = false;  
-  var url = window.location.search;    
+  var imageUrl;  
+  var challengeId;
+  var updating = false;
+  var url = window.location.search;
+
+  // Cloudinary 
+  var fileUpload = $("#file-upload")
+  var CLOUDINARY_UPLOAD_PRESET = 'pjuj0ctu'
+  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkuhmdf7w/upload'
 
   // jQUERY OBJECTS LINKED TO CHALLENGE SUBMIT FORM
-  var pointsInput = $("#points")  
+  var pointsInput = $("#points")
   var locationInput = $("#location")
   var challengeForm = $("#challengeForm");
-  var descriptionInput = $("#description");  
+  var descriptionInput = $("#description");
   var challengeNameInput = $("#challengeName");
 
+  $(fileUpload).change(handleImageUpload);
   $(challengeForm).on("submit", handleFormSubmit);
 
-//=====================================================================================//
-// FUNCTION THAT TAKES PULLS OUR USERS FROM THE DATABASE
-//=====================================================================================//
+
+  //=====================================================================================//
+  // FUNCTION THAT TAKES PULLS OUR USERS FROM THE DATABASE
+  //=====================================================================================//
 
   function checkForUser() {
 
@@ -32,9 +40,37 @@ $(document).ready(function () {
     }
   }
 
-//=====================================================================================//
-// FUNCTION THAT CREATES CONTENT FOR RES.BODY 
-//=====================================================================================//
+  //=====================================================================================//
+  // FUNCTION THAT UPLOADS IMAGE TO CLOUDINARY, RAN THRU AXIOS
+  //=====================================================================================//
+  function handleImageUpload(event) {
+
+    var file = event.target.files[0];
+    var formData = new FormData();
+
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+    // console.log(file);
+
+    axios({
+      url: CLOUDINARY_URL,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: formData
+    }).then(function(res){
+     imageUrl = res.data.secure_url
+     console.log(imageUrl);
+    }).catch(function(err){
+      console.error(err);
+    })
+  };
+
+
+  //=====================================================================================//
+  // FUNCTION THAT CREATES CONTENT FOR RES.BODY 
+  //=====================================================================================//
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -48,6 +84,7 @@ $(document).ready(function () {
       location: locationInput.val().trim(),
       description: descriptionInput.val().trim(),
       points: pointsInput.val().trim(),
+      image: imageUrl,
       UserId: userId
     };
     console.log(newChallenge)
@@ -56,13 +93,13 @@ $(document).ready(function () {
       submitChallenge(newChallenge);
     }
   }
-//=====================================================================================//
-// POST FUNCTION -- SUBMITS CHALLENGE ALONG SIDE USER WHO CREATED IT 
-//=====================================================================================//
+  //=====================================================================================//
+  // POST FUNCTION -- SUBMITS CHALLENGE ALONG SIDE USER WHO CREATED IT 
+  //=====================================================================================//
 
   function submitChallenge(challenge) {
     $.post("/api/challenges", challenge, function () {
-      window.location.href = "/api/challenges";
+      // window.location.href = "/api/challenges";
     });
   }
 
