@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello Bulma!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+  <link type="text/css" rel="stylesheet" href="style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <section class="section">
+    <nav class="navbar navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand app-title">
+        <a class="navbar-item" href="#">
+          <p>Challenge Accepted 👊</p>
+        </a>
+        <!-- <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a> -->
+      </div>
+      <!-- <div class="navbar-menu" id="navMenu">
+        <a class="navbar-item" href="#about">
+            About
+          </a>
+        <a class="navbar-item" href="#projects">
+            Projects
+          </a>
+        <a class="navbar-item" href="#contact">
+            Contact
+          </a>
+      </div> -->
+    </nav>
+    <a class="button is-primary is-rounded" id="fab">New Challenge</a>
+    <div class="container main-container">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">Challenge Name</label>
+            <div class="control">
+              <input class="input is-large" type="text" placeholder="Climb a mountain">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Location</label>
+            <div class="control">
+              <input class="input is-large" type="email" placeholder="Mount Everest, Nepal">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+              <textarea class="textarea is-large" type="text" placeholder="Climb Mt. Everest in less than a week..."></textarea>
+            </div>
+          </div>
+
+          <label class="label">Add Image</label>
+          <div class="field has-addons">
+            <div class="control">
+              <input class="input is-large" type="text" placeholder="Upload an image">
+            </div>
+            <div class="control">
+              <a class="button is-info is-large">
+                File
+              </a>
+            </div>
+          </div>
+
+          <input type="range" min="-10" max="10">
+
+          <input type="range">
+          <input class="slider is-fullwidth is-large" step="1" min="1" max="5" value="3" type="range">
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <script async type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
