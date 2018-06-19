@@ -1,15 +1,15 @@
 
-// Dependencies
-var db = require("../models");
+const db = require("../models");
+const express = require('express');
+const router = express.Router();
 
-module.exports = function(app) {
+
 
 //=====================================================================================//
 // GET ROUTE FOR GETTING ALL USERS
 //=====================================================================================//
 
-  app.get('/api/users', function(req, res){
-    console.log(Object.keys(db));
+  router.get('/api/users', function(req, res){
     db.User.findAll({
       include: [
         db.Challenge,
@@ -24,7 +24,7 @@ module.exports = function(app) {
 // GET ROUTE FOR GETTING ONE SPECIFIC USER
 //=====================================================================================//
 
-  app.get("/api/users/:id", function(req, res) {
+  router.get("/api/users/:id", function(req, res) {
     db.User.findOne({
       where: {
         id: req.params.id
@@ -34,4 +34,5 @@ module.exports = function(app) {
       res.json(dbUser);
     });
   });
-};
+
+  module.exports = router;

@@ -9,7 +9,8 @@ $(document).ready(function () {
 
 
   // Cloudinary 
-  var fileUpload = $("#file-upload")
+  var fileUpload = $("#file-upload");
+  var fileName = $("#file-name");
   var CLOUDINARY_UPLOAD_PRESET = 'pjuj0ctu'
   var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkuhmdf7w/upload'
 
@@ -46,6 +47,8 @@ $(document).ready(function () {
       data: formData
     }).then(function (res) {
       imageUrl = res.data.secure_url
+      fileName.empty();
+      fileName.append(file.name);
       console.log(imageUrl);
     }).catch(function (err) {
       console.error(err);
@@ -59,7 +62,7 @@ $(document).ready(function () {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-
+    
     if (!challengeNameInput.val().trim() || !locationInput.val().trim() || !descriptionInput.val().trim() || !pointsInput.val().trim()) {
       return
     }
@@ -71,6 +74,7 @@ $(document).ready(function () {
       points: pointsInput.val().trim(),
       image: imageUrl,
     };
+    console.log(newChallenge)
       submitChallenge(newChallenge);
   }
   //=====================================================================================//
@@ -78,8 +82,8 @@ $(document).ready(function () {
   //=====================================================================================//
 
   function submitChallenge(challenge) {
-    $.post("/challenge/create", challenge, function () {
-      window.location.href = "/challenges";
+    $.post("/challenge/create", challenge, function() {
+      // window.location.href = "/feed";
     });
   }
 
@@ -92,6 +96,5 @@ $(document).ready(function () {
       });
   }
   initializeAutoComplete();
-  checkForUser();
 });
 

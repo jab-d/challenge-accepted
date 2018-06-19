@@ -2,68 +2,82 @@
   <div class="container main-container">
     <div class="columns">
       <div class="column">
-        <div class="field">
-          <label class="label">Challenge Name</label>
-          <div class="control">
-            <input class="input is-large" type="text" placeholder="Climb a mountain">
-          </div>
-        </div>
+        <form id="challengeForm">
+          <div class="field">
 
-        <div class="field">
-          <label class="label">Location</label>
-          <div class="control">
-            <input class="input is-large" type="email" placeholder="Mount Everest, Nepal">
+            <label class="label">Challenge Name</label>
+            <div class="control">
+              <input class="input is-large" id="challengeName" type="text" placeholder="Climb a mountain">
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea class="textarea is-large" type="text" placeholder="Climb Mt. Everest in less than a week..."></textarea>
+          <div class="field">
+            <label class="label">Location</label>
+            <div class="control">
+              <input class="input is-large" id="location" type="text" placeholder="Mount Everest, Nepal">
+            </div>
           </div>
-        </div>
 
-        <label class="label">Add Image</label>
-        <div class="field has-addons">
-          <div class="control">
-            <input class="input is-large" type="text" placeholder="Upload an image">
+          <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+              <textarea class="textarea is-large" id="description" type="text" placeholder="Climb Mt. Everest in less than a week..."></textarea>
+            </div>
           </div>
-          <div class="control">
-            <a class="button is-info is-large">
-              File
-            </a>
-          </div>
-        </div>
 
-      <div class="field">
-        <label class="label">Difficulty Level</label>
-        <div class="control">
-          <div class="select is-large">
-            <select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
+          <label class="label">Add Image</label>          
+          <div class="file has-name is-fullwidth is-medium is-right is-info">
+            <label class="file-label">
+              <input class="file-input" id="file-upload" type="file" name="resume">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  File
+                </span>
+              </span>
+              <span class="file-name" id='file-name' placeholder="Upload image">
+                Upload Image
+              </span>
+            </label>
           </div>
-        </div>
-      </div>
+          <div class="field">
+            <label class="label">Difficulty Level</label>
+            <div class="control">
+              <div class="select is-large">
+                <select id="points">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-      <div class="field is-grouped is-grouped-right">
-        <p class="control">
-          <a class="button is-light is-large">
-            Cancel
-          </a>
-        </p>
-        <p class="control">
-          <a class="button is-primary is-large">
-            Submit
-          </a>
-        </p>
-      </div>
+          <div class="field is-grouped is-grouped-right">
+            <p class="control">
+              <a href="/feed" class="button is-light is-large">
+                Cancel
+              </a>
+            </p>
+            <p class="control">
+              <button class="button is-primary is-large" type="submit">
+                Submit
+              </button>
+            </p>
+          </div>
+        </form>
+
 
       </div>
     </div>
   </div>
 </section>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT1ayGoO6v1KkLGaOwZ2b6zjZUySw_7vU&libraries=places" type="text/javascript"></script>
+<script src="js/create_challenge.js" type="text/javascript"></script>

@@ -1,27 +1,28 @@
 
-// Dependencies
+// Requiring our models
 var db = require("../models");
-
-module.exports = function (app) {
+var express = require('express');
+var router = express.Router();
 
   //=====================================================================================//
   // GET ROUTE FOR GETTING ALL CHALLENGES
   //=====================================================================================//
 
-  app.get("/api/challenges", function (req, res) {
+  router.get("/api/challenges", function (req, res) {
     db.Challenge.findAll({
       include: [
         db.User
       ]
     }).then(function (dbChallenge) {
       res.json(dbChallenge);
+      // res.render('feed', {Challenge: dbChallenge})
     });
   });
 
   //=====================================================================================//
   // GET ROUTE FOR FINDING ONE SPECIFIC CHALLENGE
   //=====================================================================================//
-  app.get("/api/challenge/:id", function(req, res) {
+  router.get("/api/challenge/:id", function(req, res) {
     db.Challenge.findOne({
       where: {
         id: req.params.id
@@ -31,13 +32,12 @@ module.exports = function (app) {
       res.json(dbChallenge);
     });
   });
-
   //=====================================================================================//
   // POST ROUTE FOR SAVING NEW CHALLENGE
   //=====================================================================================//
 
-  app.post("/challenge/create", function (req, res) {
-    console.log("request body: " + req.body)
+  router.post("/challenge/create", function (req, res) {
+    console.log("request body: " + JSON.stringify(req.body));
     db.Challenge.create(req.body).then(function (dbChallenge) {
       res.json(dbChallenge);
       console.log(dbChallenge)
@@ -48,21 +48,11 @@ module.exports = function (app) {
   // STILL WORKING ON THIS --- PUT ROUTE TO UPDATE CHALLENGE STATUS
   //=====================================================================================//
 
-    app.post("/challenge/action", function(req, res) {
+    router.post("/challenge/action", function(req, res) {
       db.AcceptComplete.create(req.body).then(function(dbChallenge) {
         res.json(dbChallenge);
       });
     });
 
-    // app.delete("/challenge/:id", function (req, res) {
-    //   db.AcceptComplete.destroy({
-    //     chId: req.body.chId,
-    //     user: ,
-    //     })
-    //   .then(function (dbChallenge) {
-    //     res.json(dbChallenge);
-    //   });   
-    // });
-}; // END MODULE.EXPORT OF FUNCTION
-
+    module.exports = router;
 

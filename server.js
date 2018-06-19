@@ -1,10 +1,12 @@
+// *****************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+//
+// ******************************************************************************
 // *** Dependencies
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
-var cloudinary = require("cloudinary-core");
 
-var cl = new cloudinary.Cloudinary({cloud_name: "Jabd-Cloud", secure : true})
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -16,23 +18,33 @@ var db = require("./models");
 // Sets up the Express app to handle data parsing
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
 // Static directory
 app.use(express.static("public"));
 
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Routes
 // =============================================================
-require("./controllers/html-routes.js")(app);
-require("./controllers/user-controllers.js")(app);
-require("./controllers/challenge-controllers.js")(app);
+var challengeController = require("./controllers/challenge-controller.js");
+var userController = require("./controllers/user-controller.js");
+var viewController = require("./controllers/view-controller.js");
+
+app.use(challengeController);
+app.use(userController);
+app.use(viewController);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({}).then(function () {
-  app.listen(PORT, function () {
-    console.log("App listening @ http://localhost:" + PORT);
+db.sequelize.sync().then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT @ http://localhost:" + PORT);
   });
 });
