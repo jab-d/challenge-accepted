@@ -14,7 +14,7 @@
               <div class="media-content">
                 <p class="title is-4 challenge-title">{{challenge_name}}</p>
                 <p class="title is-4 challenge-points">Points: {{points}}</p>
-                <a class="button is-primary" href="/challenge{{challenge-id}}">View</a>
+                <a class="button is-primary" id="showModal">View</a>
                 {{#each Users}}
                 <p class="title is-4 challenge-title">{{name}}</p>
                 {{/each}}
@@ -22,7 +22,36 @@
             </div>
           </div>
         </div>
+
       </div>
     {{/each}}
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Modal title</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          content
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success complete-challenge">Complete</button>
+        </footer>
+      </div>
+    </div>
   </div>
 </div>
+<script>
+    $("#showModal").click(function() {
+      $(".modal").addClass("is-active");
+    });
+
+    $(".delete").click(function() {
+       $(".modal").removeClass("is-active");
+    });
+
+    $(".complete-challenge").click(function() {
+       $(".modal").removeClass("is-active");
+    });
+</script>
