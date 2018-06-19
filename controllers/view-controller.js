@@ -16,8 +16,8 @@ const db = require("../models");
 
 
 
-router.get('/feed', renderBlog);
-router.get('/', renderBlog);
+router.get('/feed', renderFeed);
+router.get('/', renderFeed);
 // cms route loads cms.html
 router.get("/new-challenge", function (req, res) {
   res.render('new-challenge');
@@ -29,13 +29,8 @@ router.get("/authors", function (req, res) {
 
 
 // helper for / and blog routes
-function renderBlog(req, res) {
-  var query = {};
-  if (req.query.user_id) {
-    query.UserId = req.query.user_id;
-  }
+function renderFeed(req, res) {
   db.Challenge.findAll({
-    where: query,
     include: [db.User]
   }).then(function (data) {
     res.render('feed', { Challenge: data})
