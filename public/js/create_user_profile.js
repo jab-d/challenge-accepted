@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
   // GLOBAL VARIABLES
-  var userId = 0;
   var updating = false;
   var url = window.location.search;
 
@@ -20,7 +19,6 @@ $(document).ready(function () {
       return;
     }
     var newUser = {
-      id: userId,
       name: nameInput.val().trim(),
       bio: bioInput.val().trim(),
     };

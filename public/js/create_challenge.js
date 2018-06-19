@@ -3,7 +3,6 @@ $(document).ready(function () {
   // GLOBAL VARIABLES
   var userId;
   var imageUrl;
-  var challengeId;
   var updating = false;
   var url = window.location.search;
 
@@ -25,24 +24,6 @@ $(document).ready(function () {
   // Events that trigger functions
   $(fileUpload).change(handleImageUpload);
   $(challengeForm).on("submit", handleFormSubmit);
-
-
-  //=====================================================================================//
-  // FUNCTION THAT TAKES PULLS OUR USERS FROM THE DATABASE
-  //=====================================================================================//
-
-  function checkForUser() {
-
-    if (url.indexOf("?challenge_id=") !== -1) {
-      challengeId = url.split("=")[1];
-      getChallengeData(challengeId, "challenge");
-      console.log("challenge #", challengeId)
-    }
-
-    else if (url.indexOf("?user_id=") !== -1) {
-      userId = url.split("=")[1];
-    }
-  }
 
   //=====================================================================================//
   // FUNCTION THAT UPLOADS IMAGE TO CLOUDINARY, RAN THRU AXIOS
@@ -80,7 +61,7 @@ $(document).ready(function () {
     event.preventDefault();
 
     if (!challengeNameInput.val().trim() || !locationInput.val().trim() || !descriptionInput.val().trim() || !pointsInput.val().trim()) {
-      console.log("missing something")
+      return
     }
 
     var newChallenge = {
@@ -89,23 +70,17 @@ $(document).ready(function () {
       description: descriptionInput.val().trim(),
       points: pointsInput.val().trim(),
       image: imageUrl,
-      UserId: userId
     };
-    console.log("New Challenge: " + newChallenge)
-
-    if (!updating) {
       submitChallenge(newChallenge);
-    }
   }
   //=====================================================================================//
   // POST FUNCTION -- SUBMITS CHALLENGE ALONG SIDE USER WHO CREATED IT 
   //=====================================================================================//
 
   function submitChallenge(challenge) {
-    $.post("/challenges", challenge, function () {
-      // window.location.href = "/challenges";
+    $.post("/challenge/create", challenge, function () {
+      window.location.href = "/challenges";
     });
-    // console.log("Response: " + challenge);
   }
 
 

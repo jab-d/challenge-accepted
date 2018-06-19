@@ -1,6 +1,7 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   var Challenge = sequelize.define("Challenge", {
+
     challenge_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -32,16 +33,16 @@ module.exports = function(sequelize, DataTypes) {
     image: {
       type: DataTypes.STRING
     }
-});
+  });
 
-  Challenge.associate = function(models) {
+  Challenge.associate = function (models) {
 
-    Challenge.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-    Challenge.belongsToMany(models.User, {through: models.AcceptComplete})
+    // Challenge.belongsTo(models.User);
+    Challenge.belongsToMany(models.User,
+       { 
+        through: models.AcceptComplete,
+        foreignKey: 'ChallengeId' 
+      })
   };
   return Challenge;
 };

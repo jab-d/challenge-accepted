@@ -12,7 +12,7 @@ module.exports = function (app) {
     // index route loads view.html
     app.get("/", function (req, res) {
         // res.sendFile(path.join(__dirname, "../public/views/index.html"));      
-        res.redirect('/create-user')
+        res.redirect('/challenges')
     });
 
     // Create_user.html Route

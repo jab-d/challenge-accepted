@@ -16,34 +16,35 @@ module.exports = function(app) {
     });
   });
 
-//=====================================================================================//
-// POST ROUTE FOR SAVING NEW USERS
-//=====================================================================================//
+// //=====================================================================================//
+// // POST ROUTE FOR SAVING NEW USERS
+// //=====================================================================================//
 
-  app.post("/user/create", function(req, res) {
-    console.log("User Data:")
-    console.log(req.body);
-    db.User.create({
-      name: req.body.name,
-      bio: req.body.bio,
-      points_earned: 0
-    }).then(function (userDB){
-      res.json(userDB)
-    })
-  });
+//   app.post("/user/create", function(req, res) {
+//     console.log("User Data:")
+//     console.log(req.body);
+//     db.User.create({
+//       name: req.body.name,
+//       bio: req.body.bio,
+//       points_earned: 0
+//     }).then(function (userDB){
+//       res.json(userDB)
+//     })
+//   });
 
-//=====================================================================================//
-// GET ROUTE FOR GETTING ONE SPECIFIC USER
-//=====================================================================================//
+// //=====================================================================================//
+// // GET ROUTE FOR GETTING ONE SPECIFIC USER
+// //=====================================================================================//
 
-  app.get("/api/users/:id", function(req, res) {
-    db.User.findOne({
-      where: {
-        id: req.params.id
-      },
-      include: [db.Challenge]
-    }).then(function(dbUser) {
-      res.json(dbUser);
-    });
-  });
-};
+//   app.get("/api/users/:id", function(req, res) {
+//     db.User.findOne({
+//       where: {
+//         id: req.params.id
+//       },
+//       include: [db.Challenge]
+//     }).then(function(dbUser) {
+//       res.json(dbUser);
+//     });
+//   });
+// };
+}

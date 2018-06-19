@@ -1,12 +1,17 @@
 'use strict';
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
     var AcceptComplete = sequelize.define("AcceptComplete", {
+
         completed: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: true
         }
     });
 
+    AcceptComplete.associate = function (models) {
+        // AcceptComplete.belongsTo(models.Challenge);
+        // AcceptComplete.belongsTo(models.User);
+    };
     return AcceptComplete;
 };
 

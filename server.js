@@ -1,9 +1,10 @@
-
 // *** Dependencies
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
+var cloudinary = require("cloudinary-core");
 
+var cl = new cloudinary.Cloudinary({cloud_name: "Jabd-Cloud", secure : true})
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -19,16 +20,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 
-// Set Handlebars.
-var exphbs = require("express-handlebars");
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+// Static directory
+app.use(express.static("public"));
 
 // Routes
 // =============================================================
-require("./routes/html-routes.js")(app);
-require("./routes/user-api-routes.js")(app);
-require("./routes/challenge-api-routes.js")(app);
+require("./controllers/html-routes.js")(app);
+require("./controllers/user-controllers.js")(app);
+require("./controllers/challenge-controllers.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

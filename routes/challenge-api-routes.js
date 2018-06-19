@@ -1,33 +1,77 @@
+// *********************************************************************************
+// api-routes.js - this file offers a set of routes for displaying and saving data to the db
+// *********************************************************************************
 
 // Dependencies
+// =============================================================
+
+// Requiring our models
 var db = require("../models");
 
-module.exports = function (app) {
+// Routes
+// =============================================================
+module.exports = function(app) {
 
-//=====================================================================================//
-// GET ROUTE FOR GETTING ALL CHALLENGES
-//=====================================================================================//
-
-  app.get("/api/challenges", function (req, res) {
+  // GET route for getting all of the posts
+  app.get("/api/challenges", function(req, res) {
     var query = {};
     if (req.query.user_id) {
-      query.userId = req.query.user_id;
+      query.UserId = req.query.user_id;
     }
+    // Here we add an "include" property to our options in our findAll query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Author
     db.Challenge.findAll({
       where: query,
       include: [db.User]
-    }).then(function (dbChallenge) {
-      res.json(dbChallenge);
+    }).then(function(data) {
+      res.json(data);
     });
   });
-//=====================================================================================//
-// POST ROUTE FOR SAVING NEW CHALLENGE
-//=====================================================================================//
 
-  app.post("/api/challenges", function (req, res) {
-    console.log(req.body)
-    db.Challenge.create(req.body).then(function (dbChallenge) {
-      res.json(dbChallenge);
+  // Get route for retrieving a single post
+  app.get("/api/challenges/:id", function(req, res) {
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Author
+    db.Challenge.findOne({
+      where: {
+        id: req.params.id
+      },
+      include: [db.User]
+    }).then(function(data) {
+      res.json(data);
     });
   });
-};
+
+  // POST route for saving a new post
+  app.post("/api/challenges", function(req, res) {
+    db.Challenge.create(req.body).then(function(data) {
+      res.json(data);
+    });
+  });
+
+  // DELETE route for deleting posts
+  app.delete("/api/challenges/:id", function(req, res) {
+    db.Challenge.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(data) {
+      res.json(data);
+    });
+  });
+
+  // PUT route for updating posts
+  app.put("/api/challenges", function(req, res) {
+    db.Challenge.update(
+      req.body,
+      {
+        where: {
+          id: req.body.id
+        }
+      }).then(function(data) {
+      res.json(data);
+    });
+  });
+}
