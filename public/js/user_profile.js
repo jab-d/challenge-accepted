@@ -39,7 +39,7 @@ $(document).ready(function () {
         var i = userId - 1;
         userNameInput = data[i].name;
         bioInput = data[i].bio
-        // console.log(data[i].points_earned)
+        console.log(data[i].points_earned)
         loadUser();
       });
     }
