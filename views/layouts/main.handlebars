@@ -18,6 +18,10 @@
 
   }
 
+  .section {
+    height: 100vh;
+}
+
 
 
   #fab {
@@ -28,17 +32,43 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .25);
   }
 
+  .app-title {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title-points {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .points {
+    background: hsl(204, 86%, 53%);
+
+    border-radius: 50%;
+    padding: 0 18px;
+  }
+
+  p.title.is-4.challenge-points {
+    line-height: 2;
+    color: #fff;
+  }
+
   </style>
 </head>
 
 <body>
-  <!-- <nav class="navbar navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <nav class="navbar navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand app-title">
       <a class="navbar-item" href="#">
         <p>Challenge Accepted 👊</p>
       </a>
     </div>
-  </nav> -->
+  </nav>
   {{{body}}}
 </body>
 </html>

@@ -12,17 +12,57 @@
           <div class="card-content">
             <div class="media">
               <div class="media-content">
-                <p class="title is-4 challenge-title">{{challenge_name}}</p>
-                <p class="title is-4 challenge-points">Points: {{points}}</p>
-                <a class="button is-primary" href="/challenge{{challenge-id}}">View</a>
-                {{#each Users}}
-                <p class="title is-4 challenge-title">{{name}}</p>
-                {{/each}}
+                <div class="title-points">
+                  <p class="title is-4 challenge-title">{{challenge_name}}</p>
+                  <div class="points">
+                    <p class="title is-4 challenge-points">{{points}}</p>
+                  </div>
+                </div>
+                <a class="button is-primary" id="showModal-{{challenge_id}}">View</a>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal" id="modal-{{challenge_id}}">
+        <!-- need to put the challenge ID here -->
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">{{challenge_name}}</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <h1 class="title">Points:{{points}}</h1>
+            <h2 class="subtitle">{{challengeLocation}}</h2>
+            <p>Description:</p>
+            <p>{{challengeDescription}}<p>
+            <h1 class="title">Users:</h1>
+            {{#each Users}}
+              <p class="title is-4 challenge-title">{{name}} - {{user_points}}</p>
+            {{/each}}
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success complete-challenge" id="complete-{{challenge_id}}">Complete</button>
+            <!-- need to write some js to make this complete button work for each modal -->
+          </footer>
+        </div>
+      </div>
     {{/each}}
   </div>
 </div>
+
+<script>
+{{#each Challenge}}
+    $("#showModal-{{challenge_id}}").click(function() {
+      $("#modal-{{challenge_id}}").addClass("is-active");
+    });
+{{/each}}
+    $(".delete").click(function() {
+       $(".modal").removeClass("is-active");
+    });
+
+    $(".complete-challenge").click(function() {
+       $(".modal").removeClass("is-active");
+    });
+</script>
