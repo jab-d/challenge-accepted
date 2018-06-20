@@ -6,10 +6,10 @@
         <div class="control">
           <div class="select is-large login-select">
             <select id="login-users">
-              <option id={{user-id}}>Dorian</option>
-              <option id={{user-id}}>Andrew</option>
-              <option id={{user-id}}>Jessica</option>
-              <option id={{user-id}}>Brandon</option>
+              <option>Dorian</option>
+              <option>Andrew</option>
+              <option>Jessica</option>
+              <option>Brandon</option>
             </select>
           </div>
         </div>
@@ -18,7 +18,7 @@
       <div class="field is-grouped is-grouped-right">
 
         <p class="control login-control">
-          <a class="button is-primary is-large login-button">
+          <a class="login-button button is-primary is-large login-button">
             Login
           </a>
         </p>
@@ -28,3 +28,22 @@
   </div>
 </div>
 </div>
+<script>
+  var user = $("#login-users")
+  var id;
+    $(".login-button").click(function() {
+      id = user.val().trim()
+      if(id === "Dorian"){
+        window.location.href = "/feed?user_id=3";
+      }
+      if(id === "Andrew"){
+        window.location.href = "/feed?user_id=1";        
+      }
+      if(id === "Brandon"){
+        window.location.href = "/feed?user_id=2";        
+      }
+      if(id === "Jessica"){
+        window.location.href = "/feed?user_id=4";        
+      }
+    });
+</script>

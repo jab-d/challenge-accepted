@@ -15,10 +15,11 @@ const db = require("../models");
 // Each of the below routes just handles the HTML page that the user gets sent to.
 
 
-
+router.get("/", function (req, res) {
+  res.render('login');
+});
 router.get('/feed', renderFeed);
-router.get('/', renderFeed);
-// cms route loads cms.html
+
 router.get("/new-challenge", function (req, res) {
   res.render('new-challenge');
 });
