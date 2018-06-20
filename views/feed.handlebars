@@ -1,4 +1,6 @@
-<a class="button is-primary is-rounded" id="fab" href="/new-challenge">New Challenge</a>
+<div class="new-challenge-btn">
+  <a class="button is-primary is-rounded is-medium" id="fab" href="/new-challenge">New Challenge</a>
+</div>
 <div class="container">
   <div class="columns">
     {{#each Challenge}}
@@ -18,7 +20,7 @@
                     <p class="title is-4 challenge-points">{{points}}</p>
                   </div>
                 </div>
-                <a class="button is-primary" id="showModal-{{id}}">View</a>
+                <a class="button is-primary is-medium" id="showModal-{{id}}">View</a>
               </div>
             </div>
           </div>
@@ -43,7 +45,18 @@
             {{/each}}
           </section>
           <footer class="modal-card-foot">
-            <button class="challengeComplete button is-success complete-challenge" data-post="{{id}}">Complete</button>
+            <div class="field">
+              <div class="control">
+                <div class="select is-medium">
+                  <select id="choose-user">
+                    {{#each Users}}
+                    <option>{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="challengeComplete button is-primary is-medium complete-challenge" data-post="{{id}}">Complete</button>
             <!-- need to write some js to make this complete button work for each modal -->
           </footer>
         </div>
