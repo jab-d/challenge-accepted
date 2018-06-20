@@ -10,6 +10,7 @@ router.get("/api/user", function (req, res) {
     res.json(dbUser);
   });
 });
+
 router.get("/api/location", function (req, res) {
   db.User.findAll({
     include: [db.Challenge]
@@ -58,4 +59,14 @@ router.post("/api/completed", function (req, res) {
   });
 });
 
+router.put("/api/posts", function (req, res) {
+  db.Post.update(
+    req.body, {
+      where: {
+        id: req.body.id
+      }
+    }).then(function (dbPost) {
+    res.json(dbPost);
+  });
+});
 module.exports = router;
