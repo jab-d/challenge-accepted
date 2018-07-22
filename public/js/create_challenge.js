@@ -11,7 +11,7 @@ $(document).ready(function () {
   // Cloudinary 
   var fileUpload = $("#file-upload");
   var fileName = $("#file-name");
-  var CLOUDINARY_UPLOAD_PRESET = 'pjuj0ctu'
+  var CLOUDINARY_UPLOAD_PRESET = 'quq0myu3'
   var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkuhmdf7w/upload'
 
   // jQUERY OBJECTS LINKED TO CHALLENGE SUBMIT FORM
